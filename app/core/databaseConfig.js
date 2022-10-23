@@ -4,11 +4,11 @@ config = {
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'nodeProject'
+    database: process.env.NODE_PROJECT
 }
 
-const connection = mysql.createConnection(config); //added the line
-connection.connect(function(err){
+const connection = mysql.createConnection(config);
+connection.connect((err) => {
     if (err){
         console.log('Error connecting:' + err.stack);
     }

@@ -7,17 +7,18 @@ const {
 } = require("../controllers/auth");
 const { body, header, validationResult } = require('express-validator');
 
+const errorhandler = (req,res, next ) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    next()
+}
 
 router.post("/login",
     body('email').isEmail(),
     body('password').isLength({ min: 5 }),
-    (req,res, next ) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        next()
-    },
+    errorhandler,
     logIn);
 
 router.post("/registration",
@@ -28,25 +29,13 @@ router.post("/registration",
     body('age').isInt(),
     body('email').isEmail(),
     body('password').isLength({ min: 5 }),
-    (req,res, next ) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        next()
-    },
+    errorhandler,
     registration);
 
 
 router.post("/refresh-token",
     header('refreshToken').isLength({min: 1}),
-    (req,res, next ) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        next()
-    },
+    errorhandler,
     refreshTokens);
 
 module.exports = router;

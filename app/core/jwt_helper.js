@@ -19,6 +19,7 @@ module.exports = {
                 issuer: 'localhost',
                 audience: userId
             };
+
             const token = JWT.sign({id: userId}, process.env.REFRESH_SECRET_KEY, options);
             resolve(token);
         })

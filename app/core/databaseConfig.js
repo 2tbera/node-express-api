@@ -1,20 +1,27 @@
 const mysql = require('mysql');
+const createDB = require('./db.create.schema')
+const {createPool} = require("mysql");
 
-config = {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: process.env.NODE_PROJECT
+const config = {
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || '',
+    password: process.env.DB_PASSWORD || '',
 }
 
-const connection = mysql.createConnection(config);
-connection.connect((err) => {
-    if (err){
-        console.log('Error connecting:' + err.stack);
-    }
-    console.log('Connected successfully to MySql DB.');
-});
+const pool = createPool(config)
 
-module.exports ={
-    connection : mysql.createConnection(config)
+const getConnection = () =>  mysql.createConnection({...config, database: process.env.NODE_PROJECT});
+
+let createDatabase = async () => {
+    pool.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.NODE_PROJECT}\`;`, (err) => {
+        if (err) {
+            throw {status: 500 , message: "Server Is Down "}
+        }
+        createDB(pool);
+    });
+};
+
+module.exports = {
+    getConnection,
+    createDatabase
 }

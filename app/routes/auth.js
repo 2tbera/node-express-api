@@ -6,11 +6,12 @@ const {
     refreshTokens,
 } = require("../controllers/auth");
 const { body, header, validationResult } = require('express-validator');
+const {use} = require("../middlewares/errorhandler");
 
 const errorhandler = (req,res, next ) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        throw {status: 400 , message: errors.array()}
     }
     next()
 }
@@ -19,7 +20,7 @@ router.post("/login",
     body('email').isEmail(),
     body('password').isLength({ min: 5 }),
     errorhandler,
-    logIn);
+    use(logIn));
 
 router.post("/registration",
     body('firstname').isString(),
@@ -30,12 +31,11 @@ router.post("/registration",
     body('email').isEmail(),
     body('password').isLength({ min: 5 }),
     errorhandler,
-    registration);
+    use(registration));
 
-
-router.post("/refresh-token",
+router.get("/refresh-token",
     header('refreshToken').isLength({min: 1}),
     errorhandler,
-    refreshTokens);
+    use(refreshTokens));
 
 module.exports = router;

@@ -10,7 +10,7 @@ const User = function (user) {
 
 User.create = (user) => {
     return new Promise((resolve, reject) => {
-        connection.query("INSERT INTO users set ?", user, (err, res) => {
+        connection.query("INSERT INTO user set ?", user, (err, res) => {
             if (err) {
                 reject(err);
             }
@@ -21,7 +21,7 @@ User.create = (user) => {
 
 User.getById = (email) => {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM users WHERE email=?`, email, (err, res) => {
+        connection.query(`SELECT * FROM user WHERE email=?`, email, (err, res) => {
             if (err) {
                 reject(err);
             }
@@ -32,7 +32,7 @@ User.getById = (email) => {
 
 User.read = () => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT * FROM users", (err, res) => {
+        connection.query("SELECT * FROM user", (err, res) => {
             if (err) {
                 reject(err);
             }

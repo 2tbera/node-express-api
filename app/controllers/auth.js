@@ -32,13 +32,9 @@ const registration = async (req, res) => {
 };
 
 const refreshTokens = async (req, res) => {
-    verifyRefreshToken(req.headers.refreshtoken).then(async (user) => {
-        await returnTokens(user.aud, res);
-    }).catch(err => {
-        throw {status: 403, message: err}
-    });
+    const user = await verifyRefreshToken(req.headers.refreshtoken);
+    await returnTokens(user.aud, res);
 };
-
 
 module.exports ={
     logIn,

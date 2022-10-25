@@ -4,11 +4,9 @@ const {
     logIn,
     registration,
     refreshTokens,
-    userData
 } = require("../controllers/auth");
 const { body, header, validationResult } = require('express-validator');
-const {use} = require("../middlewares/errorhandler");
-const {authGuard} = require("../middlewares/auth-guard");
+const {use} = require("../middlewares/error-handler");
 
 const errorhandler = (req,res, next ) => {
     const errors = validationResult(req);
@@ -39,12 +37,5 @@ router.get("/refresh-token",
     header('refreshToken').isLength({min: 1}),
     errorhandler,
     use(refreshTokens));
-
-
-router.get("/user-data",
-    header('authorization').isLength({min: 1}),
-    errorhandler,
-    use(authGuard),
-    use(userData));
 
 module.exports = router;

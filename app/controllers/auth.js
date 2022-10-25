@@ -39,15 +39,9 @@ const refreshTokens = async (req, res) => {
     });
 };
 
-const userData = async (req, res) => {
-    res.json(res.user)
-};
-
-
 
 module.exports ={
     logIn,
     registration,
     refreshTokens,
-    userData
 }

@@ -4,5 +4,4 @@ const  ErrorHandler = (error, req, res, next) =>  {
 
 const use = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
-
 module.exports = {ErrorHandler, use};

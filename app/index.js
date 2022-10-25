@@ -1,4 +1,3 @@
-'use strict';
 require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
@@ -15,6 +14,7 @@ const main = async () => {
     // Middlewares
     app.use(express.json());
     app.use(cors());
+
     // Routes
     app.use('/auth', require('./routes/auth'));
     app.use(ErrorHandler);

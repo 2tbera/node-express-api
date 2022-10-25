@@ -7,12 +7,11 @@ const saltRounds = 10;
 const returnTokens = async (id, res) => {
     const accessToken = await generateSignAccessToken(id);
     const refreshToken = await generateRefreshToken(id);
-
     res.json({accessToken, refreshToken})
 }
 
-exports.logIn = async (req, res) => {
-    const user = await User.getById(req.body.email)
+const logIn = async (req, res) => {
+    const user = await User.getByEmail(req.body.email)
     if (!user.length) {
         throw {status: 403, message: 'user_not_found'}
     }
@@ -24,7 +23,7 @@ exports.logIn = async (req, res) => {
     }
 };
 
-exports.registration = async (req, res) => {
+const registration = async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, saltRounds);
     let user = new User(req.body);
     user = {id: uuid.v4(), password: hash, ...user};
@@ -32,7 +31,7 @@ exports.registration = async (req, res) => {
     await returnTokens(user.id, res);
 };
 
-exports.refreshTokens = async (req, res) => {
+const refreshTokens = async (req, res) => {
     verifyRefreshToken(req.headers.refreshtoken).then(async (user) => {
         await returnTokens(user.aud, res);
     }).catch(err => {
@@ -40,3 +39,15 @@ exports.refreshTokens = async (req, res) => {
     });
 };
 
+const userData = async (req, res) => {
+    res.json(res.user)
+};
+
+
+
+module.exports ={
+    logIn,
+    registration,
+    refreshTokens,
+    userData
+}

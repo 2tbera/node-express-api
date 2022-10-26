@@ -14,6 +14,10 @@ function User(user) {
 
 User.create = (user) => {
     return new Promise((resolve, reject) => {
+        // useri shevqmeni, cavshale, shevqmeni meorejer da kide registracias vshvebi
+        // res daabrunebs 2 users, erts status false meoreze true, da radgan qvemot res[0].status amocmeb
+        // chaainsertebs da ertidaigive email it 2 roja gaichiteba romelsac status true aq
+        // SELECT * FROM user WHERE email=? AND status = true query shi es ro gacero da qvemot prosta length ze sheamocmo moagvarebs
         connection.query(`SELECT * FROM user WHERE email=?`, user.email, (err, res) => {
             if (err || (res.length && !!res[0].status)) {
                 reject(err || 'User Not Found');
@@ -32,6 +36,7 @@ User.create = (user) => {
 
 User.getByEmail = (email) => {
     return new Promise((resolve, reject) => {
+        // statusis where i daamate da if idan statusis check amoige
         connection.query(`SELECT * FROM user WHERE email=?`, email, (err, res) => {
             if (err || res.length && !res[0].status) {
                 reject(err || 'User Not Found');
@@ -43,6 +48,7 @@ User.getByEmail = (email) => {
 
 User.getById = (id) => {
     return new Promise((resolve, reject) => {
+        // aq radgan where shi ceria status = true qvemot kide gadamocmeba !res[0].status agaraa sachiro 
         connection.query("SELECT * FROM user WHERE id=? AND status=true", id , (err, res) => {
             if (err || res.length && !res[0].status) {
                 reject(err || 'User Not Found');

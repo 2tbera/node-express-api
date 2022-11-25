@@ -26,7 +26,7 @@ const logIn = async (req, res) => {
 const registration = async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, saltRounds);
     let user = new User(req.body);
-    user = {id: uuid.v4(), password: hash, ...user};
+    user = {...user, id: uuid.v4(), password: hash};
     await User.create(user)
     await returnTokens(user.id, res);
 };

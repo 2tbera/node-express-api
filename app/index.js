@@ -24,6 +24,12 @@ const main = async () => {
         throwError,
         use(authGuard),
         require('./routes/user'));
+    app.use('/album',
+        header('authorization').isLength({min: 1}),
+        throwError,
+        use(authGuard),
+        require('./routes/album'));
+
 
     // ErrorHandler
     app.use(ErrorHandler);

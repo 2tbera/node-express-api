@@ -1,8 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const {create, update, remove} = require('../controllers/album');
+const {create, update, remove, getById, getAlbums, getUserAlbums} = require('../controllers/album');
 const {use, throwError} = require("../middlewares/error-handler");
 const {body} = require("express-validator");
+
+router.get("/getAlbums",
+    throwError,
+    use(getAlbums));
+
+router.get("/getUserAlbums",
+    body('id').isLength({min: 1}),
+    throwError,
+    use(getUserAlbums));
+
+router.get("/getById",
+    body('id').isLength({min: 1}),
+    throwError,
+    use(getById));
 
 router.post("/create",
     body('name').isLength({min: 1}),

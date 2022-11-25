@@ -69,6 +69,7 @@ Album.getUserAlbums = (id) => {
             if (err) {
                 reject(err || 'Album Not Found');
             }
+            console.log(res, 11112323)
             resolve(res || null);
         });
     })

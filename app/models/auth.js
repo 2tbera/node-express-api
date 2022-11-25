@@ -14,7 +14,7 @@ function User(user) {
 
 User.create = (user) => {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM user WHERE email=? AND status = true`, user.email, (err, res) => {
+        connection.query(`SELECT * FROM user WHERE email=? AND status=true`, user.email, (err, res) => {
             if (err || res.length ) {
                 reject(err || 'User Not Found');
                 return
@@ -32,8 +32,8 @@ User.create = (user) => {
 
 User.getByEmail = (email) => {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM user WHERE email=? AND status = true`, email, (err, res) => {
-            if (err || res.length) {
+        connection.query(`SELECT * FROM user WHERE email=? AND status=true`, email, (err, res) => {
+            if (err || res.length && !res[0].status) {
                 reject(err || 'User Not Found');
             }
             resolve(res);
@@ -44,7 +44,7 @@ User.getByEmail = (email) => {
 User.getById = (id) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM user WHERE id=? AND status=true", id , (err, res) => {
-            if (err || res.length) {
+            if (err || res.length && !res[0].status) {
                 reject(err || 'User Not Found');
             }
             resolve(res[0] || null);

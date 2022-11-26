@@ -19,11 +19,13 @@ const main = async () => {
 
     // Routes
     app.use('/auth', require('./routes/auth'));
+
     app.use('/user',
         header('authorization').isLength({min: 1}),
         throwError,
         use(authGuard),
         require('./routes/user'));
+
     app.use('/album',
         header('authorization').isLength({min: 1}),
         throwError,

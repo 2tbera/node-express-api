@@ -5,7 +5,7 @@ const {
     registration,
     refreshTokens,
 } = require("../controllers/auth");
-const {body, header, validationResult} = require('express-validator');
+const {body, header} = require('express-validator');
 const {use, throwError} = require("../middlewares/error-handler");
 
 router.post("/login",

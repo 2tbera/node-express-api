@@ -28,7 +28,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             JWT.verify(refreshToken, process.env.REFRESH_SECRET_KEY, (err, payload) => {
                 if(err) {
-                    reject('token_Invalid')
+                    reject({status: 401, message: 'token_Invalid'});
                 }
                 resolve(payload)
             } );

@@ -15,7 +15,7 @@ const getConnection = () =>  mysql.createConnection({...config, database: proces
 let createDatabase = async () => {
     pool.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.NODE_PROJECT}\`;`, (err) => {
         if (err) {
-            throw {status: 500 , message: "Server Is Down "}
+            console.log({status: 500 , message: "Server Is Down "})
         }
         createDB(pool);
     });

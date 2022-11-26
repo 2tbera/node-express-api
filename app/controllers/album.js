@@ -7,7 +7,6 @@ const create = async (req, res) => {
     res.json(album)
 };
 
-
 const update = async (req, res) => {
     const album = await Album.getById(req.body.id)
     if (!album) {

@@ -32,7 +32,6 @@ const main = async () => {
         use(authGuard),
         require('./routes/album'));
 
-
     // ErrorHandler
     app.use(ErrorHandler);
 

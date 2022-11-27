@@ -8,7 +8,7 @@ router.get("/getAlbums",
     throwError,
     use(getAlbums));
 
-router.get("/getUserAlbums",
+router.post("/getUserAlbums",
     body('id').isLength({min: 1}),
     throwError,
     use(getUserAlbums));

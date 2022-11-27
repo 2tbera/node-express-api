@@ -1,17 +1,11 @@
-FROM node:16
+FROM node:16.18.0
 
 WORKDIR /app
 
-#COPY ["package.json", "package-lock.json*", "./"]
-
-COPY . .
+COPY ["package.json", "package-lock.json*", "./"]
 
 RUN npm install
 
-
-#Solve the problem reinstaling bcrypt
-RUN npm uninstall bcrypt
-RUN npm i bcrypt
-
+COPY . .
 
 CMD [ "npm", "run", "start" ]

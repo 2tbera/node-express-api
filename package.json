@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app/index.js localhost 8080",
+    "start": "nodemon app/index.js",
+    "docker-build": "docker build -t express .",
+    "docker-net": "docker network create node-api-network",
+    "docker-start": "docker run -p 3000:3000 express",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

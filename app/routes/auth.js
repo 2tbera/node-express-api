@@ -17,11 +17,10 @@ router.post("/login",
     use(logIn));
 
 router.post("/registration",
-    body('firstname').isString(),
     body('firstname').isLength({min: 1}),
     body('lastname').isString(),
     body('lastname').isLength({min: 1}),
-    body('age').isInt(),
+    body('age').optional().isInt(),
     body('email').isEmail(),
     body('password').isLength({min: 5}),
     throwError,

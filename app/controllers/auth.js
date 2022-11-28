@@ -13,13 +13,13 @@ const returnTokens = async (id, res) => {
 const logIn = async (req, res) => {
     const user = await User.getByEmail(req.body.email)
     if (!user.length) {
-        throw {status: 403, message: 'user_not_found'}
+        throw {status: 404, message: 'user_not_found'}
     }
     const status = await bcrypt.compare(req.body.password, user[0].password);
     if (status) {
         await returnTokens(user[0].id, res)
     } else {
-        throw {status: 403, message: 'password_incorrect'}
+        throw {status: 404, message: 'password_incorrect'}
     }
 };
 

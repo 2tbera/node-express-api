@@ -16,7 +16,7 @@ User.create = (user) => {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM user WHERE email=? AND status=true`, user.email, (err, res) => {
             if (err || res.length ) {
-                reject({status: 403, message: err || 'User Already Exists'});
+                reject({status: 404, message: err || 'User Already Exists'});
                 return
             }
             connection.query("INSERT INTO user set ?", user, (err, res) => {
@@ -42,7 +42,7 @@ User.getById = (id) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM user WHERE id=? AND status=true", id , (err, res) => {
             if (err || res.length && !res[0].status) {
-                reject({status: 403, message: err || 'User Not Found'});
+                reject({status: 404, message: err || 'User Not Found'});
             }
             resolve(res[0] || null);
         });

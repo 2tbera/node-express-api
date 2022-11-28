@@ -10,7 +10,7 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     const album = await Album.getById(req.body.id)
     if (!album) {
-        throw {status: 403, message: 'album_not_found'}
+        throw {status: 404, message: 'album_not_found'}
     }
     const updatedAlbum = new Album({id: req.body.id, name: req.body.name})
     const x = await Album.update(updatedAlbum)
@@ -21,10 +21,10 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
     const album = await Album.getById(req.body.id)
     if (!album) {
-        throw {status: 403, message: 'album_not_found'}
+        throw {status: 404, message: 'album_not_found'}
     }
     const x  = await Album.remove({id: req.body.id, status: false})
-    res.json(x)
+    res.json({id: req.body.id})
 };
 
 const getAlbums = async (req, res) => {
@@ -40,7 +40,7 @@ const getUserAlbums = async (req, res) => {
 const getById = async (req, res) => {
     const album = await Album.getById(req.body.id)
     if (!album) {
-        throw {status: 403, message: 'album_not_found'}
+        throw {status: 404, message: 'album_not_found'}
     }
     res.json(album)
 };

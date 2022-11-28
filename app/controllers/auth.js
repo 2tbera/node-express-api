@@ -1,5 +1,5 @@
 const uuid = require("uuid");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const User = require('../models/auth');
 const {generateSignAccessToken, generateRefreshToken, verifyRefreshToken} = require('../core/jwt_helper');
 const saltRounds = 10;

@@ -30,9 +30,6 @@ const main = async () => {
         require('./routes/user'));
 
     app.use('/file',
-        header('authorization').isLength({min: 1}),
-        throwError,
-        use(authGuard),
         require('./routes/file'));
 
     app.use('/album',

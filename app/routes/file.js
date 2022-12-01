@@ -9,7 +9,7 @@ router.post("/upload",
     uploadMG.single('file'),
     use(upload));
 
-router.get("/files",
+router.get("/files/:filename",
     use(getReadFile));
 
 module.exports = router;

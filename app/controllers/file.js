@@ -28,7 +28,9 @@ const getFiles = async (req, res) => {
 
 const getReadFile = async (req, res) => {
     console.log(req, res,'req, res')
-    gfs.files.find().toArray((err, files) => {
+    console.log(req.params.filename)
+    gfs.files.find({ filename : req.params.filename}).toArray((err, files) => {
+        console.log(files)
         if (!files || files.length === 0) return res.status(404).json({ err: 'No files exist' });
         const readstream = gfs.createReadStream(files[0]);
         readstream.pipe(res);

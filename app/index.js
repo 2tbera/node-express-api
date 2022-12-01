@@ -8,6 +8,7 @@ const {ErrorHandler, use, throwError} = require('./middlewares/error-handler')
 const {createDatabase} = require('./core/databaseConfig')
 const {header} = require("express-validator");
 const {authGuard} = require("./middlewares/auth-guard");
+const methodOverride = require('method-override');
 
 const main = async () => {
 
@@ -16,6 +17,8 @@ const main = async () => {
     // Middlewares
     app.use(express.json());
     app.use(cors());
+
+    app.use(methodOverride('_method'));
 
     // Routes
     app.use('/auth', require('./routes/auth'));
@@ -26,11 +29,23 @@ const main = async () => {
         use(authGuard),
         require('./routes/user'));
 
+    app.use('/file',
+        header('authorization').isLength({min: 1}),
+        throwError,
+        use(authGuard),
+        require('./routes/file'));
+
     app.use('/album',
         header('authorization').isLength({min: 1}),
         throwError,
         use(authGuard),
         require('./routes/album'));
+
+    app.use('/music',
+        header('authorization').isLength({min: 1}),
+        throwError,
+        use(authGuard),
+        require('./routes/music'));
 
     // ErrorHandler
     app.use(ErrorHandler);

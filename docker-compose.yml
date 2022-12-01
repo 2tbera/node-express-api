@@ -19,19 +19,44 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysqldb
 
+  mongo:
+    image: mongo:3.4
+    restart: always
+    container_name: mongo_database
+    environment:
+      MONGO_INITDB_ROOT_DATABASE: nodeProject
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express:0.54.0
+    restart: always
+    ports:
+      - 5050:8081
+    depends_on:
+      - mongo
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+
   app:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    command: npm start -- /parse-server/config/config.json
     volumes:
       - .:/app
     depends_on:
       - db
+      - mongo
     links:
       - db:db
-
+      - mongo:mongo
 
 volumes:
   db:
+

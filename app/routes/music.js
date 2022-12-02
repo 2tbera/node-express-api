@@ -15,6 +15,8 @@ router.post('/upload',
 
 router.post("/create",
     body('name').isLength({min: 1}),
+    body('category').isLength({min: 1}),
+    body('file').isLength({min: 1}),
     throwError,
     use(create));
 

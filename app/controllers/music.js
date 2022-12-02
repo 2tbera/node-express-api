@@ -2,9 +2,9 @@ const uuid = require("uuid");
 const Music = require('../models/music');
 
 const create = async (req, res) => {
-    const album = new Music({id: uuid.v4(), user_id: res.user.id, name: req.body.name})
-    await Music.create(album)
-    res.json(album)
+    const music = new Music({id: uuid.v4(), user_id: res.user.id, name: req.body.name, category: req.body.category, file: req.body.file})
+    await Music.create(music)
+    return music
 };
 
 const upload = async (req, res) => {

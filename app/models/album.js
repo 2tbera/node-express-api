@@ -19,6 +19,18 @@ Album.create = (album) => {
     });
 };
 
+Album.addMusic = (album_music) => {
+    return new Promise((resolve, reject) => {
+        connection.query(`INSERT INTO album_music set ?`, album_music , (err, res) => {
+            if (err) {
+                reject({status: 404});
+                return
+            }
+            resolve(res);
+        });
+    });
+};
+
 Album.update = (data) => {
     return new Promise((resolve, reject) => {
         connection.query("UPDATE album SET name=? WHERE id=?", [data.name, data.id], (err, res) => {
@@ -49,6 +61,17 @@ Album.getById = (id) => {
                 reject({status: 404, message: 'Album Not Found'});
             }
             resolve(res[0] || null);
+        });
+    })
+};
+
+Album.getAlbumMusicById = (id) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM nodeProject.album INNER JOIN nodeProject.album_music ON nodeProject.album.id = nodeProject.album_music.album_id INNER JOIN nodeProject.music ON nodeProject.music.id = nodeProject.album_music.music_id WHERE nodeProject.album.id=? ", id , (err, res) => {
+            if (err) {
+                reject({status: 404, message: 'Album Not Found'});
+            }
+            resolve(res || null);
         });
     })
 };

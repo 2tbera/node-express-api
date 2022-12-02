@@ -6,14 +6,14 @@ function Music(music) {
     this.name = music.name;
     this.user_id = music.user_id;
     this.file = music.file;
-    this.caregory = music.caregory;
+    this.category = music.category;
 }
 
 Music.create = (music) => {
     return new Promise((resolve, reject) => {
         connection.query(`INSERT INTO music set ?`,music , (err, res) => {
             if (err) {
-                reject({status: 404});
+                reject({status: 404, message: 'Error'});
                 return
             }
             resolve(res);
@@ -46,7 +46,7 @@ Music.remove = (data) => {
 
 Music.getById = (id) => {
     return new Promise((resolve, reject) => {
-        connection.query("SELECT * FROM music WHERE id=? AND status=true", id , (err, res) => {
+        connection.query("SELECT * FROM music WHERE use_id=? AND status=true", id , (err, res) => {
             if (err) {
                 reject({status: 404, message: 'Music Not Found'});
             }

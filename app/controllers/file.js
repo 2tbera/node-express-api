@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Grid = require("gridfs-stream");
-const fs = require('fs');
 
 const conn = mongoose.connection;
 let gfs;
@@ -14,32 +13,16 @@ const upload = async (req, res) => {
     res.json(req.file)
 };
 
+
 const getFiles = async (req, res) => {
-
-
-
-    gfs.files.find().toArray((err, files) => {
-        if (!files || files.length === 0) return res.status(404).json({ err: 'No files exist' });
-        const readstream = gfs.createReadStream(files[0]);
-        readstream.pipe(res);
-        // return res.json(files);
-    });/**/
-};
-
-const getReadFile = async (req, res) => {
-    console.log(req, res,'req, res')
-    console.log(req.params.filename)
     gfs.files.find({ filename : req.params.filename}).toArray((err, files) => {
-        console.log(files)
         if (!files || files.length === 0) return res.status(404).json({ err: 'No files exist' });
-        const readstream = gfs.createReadStream(files[0]);
-        readstream.pipe(res);
-        // return res.json(files);
-    });/**/
+        const read_stream = gfs.createReadStream(files[0]);
+        read_stream.pipe(res);
+    });
 };
 
 module.exports = {
     upload,
-    getFiles,
-    getReadFile
+    getFiles
 }

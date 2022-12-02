@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {create, update, remove, getById, getAlbums, getUserAlbums} = require('../controllers/album');
+const {create, update, remove, getById, getAlbums, getUserAlbums, addMusic} = require('../controllers/album');
 const {use, throwError} = require("../middlewares/error-handler");
 const {body} = require("express-validator");
 
@@ -13,15 +13,18 @@ router.post("/getUserAlbums",
     throwError,
     use(getUserAlbums));
 
-router.get("/getById",
-    body('id').isLength({min: 1}),
-    throwError,
+router.get("/getById/:id",
     use(getById));
 
 router.post("/create",
     body('name').isLength({min: 1}),
     throwError,
     use(create));
+
+router.post("/addMusic/:id",
+    body('name').isLength({min: 1}),
+    throwError,
+    use(addMusic));
 
 router.put("/update",
     body('id').isLength({min: 1}),

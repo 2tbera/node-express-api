@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {upload, getReadFile} = require('../controllers/file');
+const {upload, getFiles} = require('../controllers/file');
 const {use} = require("../middlewares/error-handler");
 const {uploadMG} = require("../core/databaseConfig");
 
@@ -10,6 +10,6 @@ router.post("/upload",
     use(upload));
 
 router.get("/files/:filename",
-    use(getReadFile));
+    use(getFiles));
 
 module.exports = router;

@@ -1,11 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const {upload, getFiles} = require('../controllers/file');
-const {use} = require("../middlewares/error-handler");
+const {use, throwError} = require("../middlewares/error-handler");
 const {uploadMG} = require("../core/databaseConfig");
 
+/**
+ * @description API file Route 
+    * @upload POST upload @header authorization @body file
+    * @files GET
+    *   @filename @params filename
+*/
 
 router.post("/upload",
+    header('authorization').isLength({min: 1}),
+    throwError,
+    use(authGuard),
     uploadMG.single('file'),
     use(upload));
 

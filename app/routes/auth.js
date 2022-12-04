@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
-
 const {
     logIn,
     registration,
@@ -9,6 +7,13 @@ const {
 } = require("../controllers/auth");
 const {body, header} = require('express-validator');
 const {use, throwError} = require("../middlewares/error-handler");
+
+/**
+ * @description API auth Route 
+    * @login POST @body email password
+    * @registration POST @body firstname lastname age email password
+    * @refreshToken GET @header refreshToken
+*/ 
 
 router.post("/login",
     body('email').isEmail(),

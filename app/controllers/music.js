@@ -7,12 +7,6 @@ const create = async (req, res) => {
     return music
 };
 
-const upload = async (req, res) => {
-    if(req.files) {
-        console.log(req.files.foo); // the uploaded file object
-    }
-    res.json({})
-};
 
 const update = async (req, res) => {
     const album = await Music.getById(req.body.id)
@@ -43,7 +37,6 @@ const getById = async (req, res) => {
 };
 
 module.exports = {
-    upload,
     getById,
     create,
     update,

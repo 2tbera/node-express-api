@@ -4,6 +4,19 @@ const {create, update, remove, getById, getAlbums, getUserAlbums, addMusic} = re
 const {use, throwError} = require("../middlewares/error-handler");
 const {body} = require("express-validator");
 
+/**
+ * @description API album Route @header authorization
+    * @getAlbums GET  
+    * @getUserAlbums POST @body id
+    * @getById GET
+    *   @id @params id
+    * @create POST @body name
+    * @addMusic POST
+    *   @id @params id @body name
+    * @update PUT @body id name
+    * @remove DELETE @body id 
+*/
+
 router.get("/getAlbums",
     throwError,
     use(getAlbums));

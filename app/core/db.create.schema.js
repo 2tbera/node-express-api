@@ -1,3 +1,8 @@
+/**
+ * @description MYSQL DB SCHEMA, this file creates 
+ * Mysql db from ground up
+*/   
+
 const tableQuery = {
     user_table :  "CREATE TABLE IF NOT EXISTS `" + process.env.NODE_PROJECT + "`.`user` (`id` VARCHAR(36) NOT NULL , `firstname` VARCHAR(100) NULL , `lastname` VARCHAR(100) NULL , `email` VARCHAR(100) NOT NULL ,  `password` VARCHAR(100) NOT NULL , `age` TINYINT(100) NULL , `avatar` BLOB NULL , `bio` TEXT NULL , `status` BOOLEAN NOT NULL DEFAULT TRUE , `createAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,`updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`), INDEX `lastname_ind` (`lastname`), INDEX `firstname_ind` (`firstname`)) ENGINE = InnoDB;",
     album_table : "CREATE TABLE IF NOT EXISTS  `" + process.env.NODE_PROJECT + "`.`album` (`id` VARCHAR(36) NOT NULL , `user_id` VARCHAR(36) NOT NULL, `name` VARCHAR(100) NOT NULL , `status` BOOLEAN NOT NULL DEFAULT TRUE , `createAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updatedAt` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`, `user_id`), FOREIGN KEY (`user_id`) REFERENCES user(id), UNIQUE(`name`)) ENGINE = InnoDB;",

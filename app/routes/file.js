@@ -3,6 +3,8 @@ const router = express.Router();
 const {upload, getFiles} = require('../controllers/file');
 const {use, throwError} = require("../middlewares/error-handler");
 const {uploadMG} = require("../core/databaseConfig");
+const { header } = require("express-validator");
+const { authGuard } = require("../middlewares/auth-guard");
 
 /**
  * @description API file Route 
